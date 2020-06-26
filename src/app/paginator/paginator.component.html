@@ -1,0 +1,23 @@
+<ul *ngIf="paginas?.length>0" class="pagination">
+    <!--Primera pagina-->
+    <li [ngClass]="isFirstPage() ? 'disabled page-item':'page-item'">
+        <a  class="page-link"  [routerLink]="['/clientes/page',0]">Primera</a>
+    </li>
+    <!--Pagina anterior-->
+    <li class="page-item" *ngIf="paginador.number > 0 ">
+        <a class="page-link" [routerLink]="['/clientes/page',paginador.number-1]">&laquo;</a>
+    </li>  
+    <!--listado de paginas-->
+    <li class="page-item" *ngFor="let pagina of paginas" [ngClass]="pagina-1 == paginador.number?'active':''">
+        <span class="page-link" *ngIf="pagina-1 == paginador.number">{{pagina}}</span>
+        <a *ngIf="pagina-1 != paginador.number" class="page-link"[routerLink]="['/clientes/page',pagina-1]">{{pagina}}</a>
+    </li>
+    <!--Pagina siguiente-->
+    <li class="page-item" *ngIf="paginador.number < paginador.totalPages-1">
+        <a class="page-link" [routerLink]="['/clientes/page',paginador.number+1]">&raquo;</a>
+    </li>
+    <!--Última pagina-->
+    <li [ngClass]="isLastPage() ? 'disabled page-item':'page-item'">
+        <a  class="page-link"  [routerLink]="['/clientes/page',paginador.totalPages-1]">Última</a>
+    </li>
+</ul>

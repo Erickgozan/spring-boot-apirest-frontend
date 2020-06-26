@@ -1,0 +1,52 @@
+<detalles-component  *ngIf="clienteSeleccionado" [cliente]="clienteSeleccionado" ></detalles-component>
+<div class="card text-white mb-5 my-4">
+  <div class="card-header">
+    <h2 class="text-dark float-left">Clientes</h2>
+    <div class="float-right">
+      <button *ngIf="authService.hasRole('ROLE_ADMIN')" class="btn btn-success " [routerLink]="['/clientes/form']">Crear cliente</button>
+    </div>
+  </div>
+  <div class="card-body overflow-auto" *ngIf="clientes?.length>0">
+    <h4 class="card-title text-dark">Listado de clientes</h4>
+    <table class="table ">
+      <thead>
+        <tr>
+          <!---->
+          <th *ngIf="authService.hasRole('ROLE_USER')">Perfil</th>
+          <th>Nombre</th>
+          <th>Apellido</th>
+          <th>Email</th>
+          <th>Fecha</th>
+          <th *ngIf="authService.hasRole('ROLE_ADMIN')">Crear factura</th>
+          <th *ngIf="authService.hasRole('ROLE_ADMIN')">Editar</th>
+          <th *ngIf="authService.hasRole('ROLE_ADMIN')">Eliminar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let cliente of clientes">
+          <!---->
+          <td *ngIf="authService.hasRole('ROLE_USER')" scope="row">
+            <img  *ngIf="cliente.foto" data-toggle="modal" data-target="#modalFoto" (click)="verDetalle(cliente)"
+              style="width: 50px; cursor: pointer;" src="http://localhost:8080/api/uploads/img/{{cliente.foto}}"
+              class="card-img-top" alt="Foto del cliente">
+            <img *ngIf="!cliente.foto" data-toggle="modal" data-target="#modalFoto" (click)="verDetalle(cliente)"
+              style="width: 50px; cursor: pointer;" src="http://localhost:8080/images/no-user.png" class="card-img-top"
+              alt="Foto del cliente">
+          </td>
+          <td scope="row">{{cliente.nombre}}</td>
+          <td scope="row">{{cliente.apellido | uppercase}}</td>
+          <td scope="row">{{cliente.email}}</td>
+          <td scope="row">{{cliente.createAt}}</td><!-- | date:'dd/MM/yyyy'-->
+          <td *ngIf="authService.hasRole('ROLE_ADMIN')"><button [routerLink]="['/facturas/form/',cliente.id]" class="btn btn-warning">Crear factura</button></td>
+          <td *ngIf="authService.hasRole('ROLE_ADMIN')"><button [routerLink]="['/clientes/form/',cliente.id]" class="btn btn-primary">Editar</button></td>
+          <td *ngIf="authService.hasRole('ROLE_ADMIN')"><button (click)="delete(cliente)" class="btn btn-danger">Eliminar</button></td>
+        </tr>
+      </tbody>
+    </table>
+    <!--Inyectamos el componente cliente al componente paginador-->
+    <paginator-nav *ngIf="clientePaginador" [paginador]="clientePaginador"></paginator-nav>
+  </div>
+  <div class="alert alert-info my-4" *ngIf="clientes?.length==0">
+    No se encontraron clientes en la base de datos!.
+  </div>
+</div>

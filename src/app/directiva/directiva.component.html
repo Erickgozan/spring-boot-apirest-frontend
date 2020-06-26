@@ -1,0 +1,14 @@
+<!--Muestra un listado de cursos-->
+<button type="button" (click)="setHabilitar()" name="" id="" class="btn btn-primary my-3">{{getButtomValue()}}</button>
+<div class="card">
+    <div class="card-header">
+        Listado de cursos
+    </div>
+    <div class="card-body">
+        <ul class="list-group" *ngIf="habilitar">
+            <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let curso of listaCurso">
+                {{curso}}
+            </li>
+        </ul>
+    </div>
+</div>

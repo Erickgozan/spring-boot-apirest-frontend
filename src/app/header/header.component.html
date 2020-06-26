@@ -1,0 +1,33 @@
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">{{titulo}}</a>
+    <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId"
+        aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation"></button>
+    <div class="collapse navbar-collapse" id="collapsibleNavId">
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+
+            <li class="nav-item" routerLinkActive="active">
+                <a class="nav-link" [routerLink]="['/directivas']">Directivas</a>
+            </li>
+            <li class="nav-item" routerLinkActive="active">
+                <a class="nav-link" [routerLink]="['/clientes']">Clientes</a>
+            </li>
+
+        </ul>
+        <ul class="navbar-nav navbar-right">
+            <li>
+                <a *ngIf="!mostrarLoginLogOut()" [routerLink]="['/login']" class="btn btn-outline-primary">Iniciar
+                    sesión</a>
+            </li>
+            <!-- Default dropleft button -->
+                <li *ngIf="mostrarLoginLogOut()" class="btn-group dropleft">
+                    <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        {{username}}
+                    </button>
+                    <div class="dropdown-menu">
+                        <button (click)="logOut()" class="dropdown-item" type="submit">Cerrar Sesión</button>
+                    </div>
+                </li>
+        </ul>
+    </div>
+</nav>
